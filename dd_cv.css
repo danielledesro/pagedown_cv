@@ -1,20 +1,29 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display&display=swap");
 
-/* Main text is monserrat*/
+/* Main text is monserrat, applies to all text inside the body element*/
 body {
   font-family: "Montserrat", sans-serif;
-  font-weight: 300;
-  line-height: 1.3;
+  font-weight: 300; /* smaller than the normal 400 weight */ 
+  line-height: 1.3; /* increase line height to improve readability */
   color: #444;
 }
 
 /* Give headers playfair font */
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   font-family: "Playfair Display", serif;
   color: #000;
 }
+
+/* style for the disclaimer */
+#disclaimer code{
+  color: #2E2E2E;
+  font-family: "Source Code Pro";
+  font-weight: 300;
+  font-size: 8pt;
+  font-style: normal;
+  text-align: justify;
+}
+
 
 /* When in PDF export mode make sure superscripts are nice and small and italic */
 sup {
@@ -24,8 +33,9 @@ sup {
 
 /* Avoid the breaking within a section */
 .blocks {
-  break-inside: avoid;
+    break-inside: avoid-column;
 }
+
 
 * {
   /* Override default right margin for sidebar*/
@@ -50,37 +60,51 @@ sup {
   padding-top: 0.005rem;
 }
 
+
 /* Laptop icon isn't centered by default which is lame */
 .fa-laptop {
   margin-left: -3px;
 }
+
 
 /* When we have links at bottom in a list make sure they actually are numbered */
 #links li {
   list-style-type: decimal;
 }
 
-/* Dont put the little fake list point in front of links */
+#aside{
+  position:relative; /* for disclaimer */
+  height:bar(--content-area-height);
+}
+/* Dont put the little fake list point in front of links
 .aside li::before {
-  display: none;
+  display: none; }*/
+
+/* Make sure elements in aside are centered and have a nice small text */
+.aside {
+  width: calc(var(--sidebar-width) + 9px);
+  padding: 0 var(--sidebar-horizontal-padding); 
+  margin: 0;
+  line-height: 1.2;
+  font-size: 0.75rem;
 }
 
-/* Move closer to start and up towards header */
-.aside ul {
-  padding-left: 1rem;
-}
-
+/* Add a bullet point before each li (list item) inside the aside element */
 .aside li::before {
   position: relative;
   margin-left: -4.25pt;
   content: "• ";
 }
 
-/* Make sure elements in asside are centered and have a nice small text */
-.aside {
-  width: calc(var(--sidebar-width) + 9px);
-  line-height: 1.2;
-  font-size: 0.75rem;
+/* Move ul (unordered list) within sidebar to the left */
+.aside ul {
+  padding-left: 0.5rem;
+}
+
+.sidebar{
+  width: calc(var(--sidebar-width)+9px);
+  padding: 0:
+  margin: 0;
 }
 
 /* Make little circle outline be a light blue */
@@ -88,10 +112,7 @@ sup {
   background-color: #08306b;
 }
 
-/* Remove the fake bullets from lists */
-.aside li::before {
-  content: auto;
-}
+/* some styling for the skilbar */
 
 .skill-bar {
   color: black;
@@ -114,6 +135,7 @@ sup {
   padding-bottom: 1rem;
 }
 
+
 /* Add styles for little cards  */
 .info-card{
   width: 220px;    
@@ -121,4 +143,32 @@ sup {
   padding: 0.5rem;
   margin: 0.5rem;
   box-shadow: 1px 1px 4px black;
+}
+
+
+/* Get page numbering */
+
+.pagedjs_margin-bottom-right-corner {
+  visibility: unset !important;
+}
+.pagedjs_bottom-right-left-corner>.pagedjs_margin-content::after {
+  content: counter(page);
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  color: #2E2E2E;
+  font-size: 10pt;
+}
+
+/* Add page numbering */
+
+@page :left {
+  @bottom {
+    content: counter(page);
+  }
+}
+@page :right {
+  @bottom {
+    content: counter(page);
+  }
 }

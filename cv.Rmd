@@ -10,15 +10,16 @@ params:
 output:
   pagedown::html_resume:
     css: ['dd_cv.css', 'resume']
+    # set it to true for a self-contained HTML page but it'll take longer to render
     self_contained: true
-keep_md: true
+
 ---
 
 ```{css, echo=FALSE}
 /* Turn-off side-bar for publications */
-.pagedjs_page:not(:nth-of-type(-n+2)) {
+.pagedjs_page:not(:nth-of-type(-n+3)) {
   --sidebar-width: 0rem; /* Shrink sidebar width to 0 */
-  --sidebar-background-color: #ffffff; /* Make color same as background */
+  --sidebar-background-color: #ffffff; /* Make colour same as background */
   --main-width: calc(var(--content-width) - var(--sidebar-width));
   --decorator-horizontal-margin: 0.2in;
 }
@@ -83,13 +84,48 @@ Contact {#contact}
 CV %>% print_contact_info()
 ```
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-Language Skills {#skills}
+
+Language Skills {#languageskills}
 --------------------------------------------------------------------------------
 
 ```{r}
 CV %>% print_skill_bars()
 ```
+```{r}
+CV %>% print_skill_list()
+```
+
+Disclaimer {#disclaimer}
+--------------------------------------------------------------------------------
+This resume was made with the R package [**pagedown**](https://github.com/rstudio/pagedown) and [**datadrivencv**](http://nickstrayer.me/datadrivencv/index.html).
+
+Last updated on `r Sys.Date()`.
 
 
 Main
@@ -97,6 +133,7 @@ Main
 
 Danielle Desrochers {#title}
 --------------------------------------------------------------------------------
+### Aquatic Biologist \| Data Scientist \| ADD TITLE
 
 ```{r}
 CV %<>% print_text_block("intro") 
@@ -104,28 +141,79 @@ CV %<>% print_text_block("intro")
 
 Education {data-icon=graduation-cap data-concise=true}
 --------------------------------------------------------------------------------
-::: aside
-#### Research Skills
-<p><strong>- Ability to record complete, accurate, and legible data, observations, and notes, during field work activities.</strong></p>
-<p><strong>- Safely travelled to sampling locations using various field vehicles (all-terrain vehicles, trucks, vans) and watercrafts (boats with outboard motors and canoes).</strong></p>
-<p><strong>- Comfortable working in remote outdoor locations, in demanding weather conditions and for extended periods of time demonstrated by both personal activities, such as back-country camping and canoeing, and previous work experience.</strong></p>
+
+:::aside
+## Awards
+- Study in Italy Grant (2021)
+- Indspire Building Better Futures Scholarship (2014-2021)
+- Louis Riel Awards (2014-2016)
+- Guertin Centennial Entrance Scholarship, U of M (2014)
+- Cambrian Credit Union Learning for Life Award (2014)
+- MASRC - 2002 NAIG Legacy Athlete Scholarship (2014) 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 :::
+
 ```{r}
 CV %<>% print_section('education')
 ```
 
+
 Research Experience {data-icon=laptop}
 --------------------------------------------------------------------------------
 
-<!-- ::: aside -->
-<!--  ```{r} -->
-<!--  CV %<>% print_text_block('research_skills') -->
-<!--  ``` -->
-<!-- ::: -->
-
 ```{r}
-CV %<>% print_section('research_positions')
+CV %<>% print_section('research_positions_a')
 ```
+
+\pagebreak
+Research Experience {data-icon=laptop}
+--------------------------------------------------------------------------------
+
+:::aside
+<!-- <span style="font-weight: 300; font-size: 1.1rem; color: #000">Research Skills</span> -->
+<!-- <br> -->
+## Research Skills
+- Safely travel to sampling locations.<br>
+- Comfortable working in remote outdoor locations, in demanding weather conditions and for extended periods of time.<br>
+- Ability to record complete and accurate field notes.<br>
+- Knowledgeable in field sampling techniques, laboratory anlyses, and environmental monitoring.<br>
+- Effective data visualization.<br>
+- Data analysis.<br>
+- Statistical and mathematical modelling.
+:::
+```{r}
+CV %<>% print_section('research_positions_b')
+```
+
+\pagebreak
+Other Employment {data-icon=book}
+--------------------------------------------------------------------------------
+::: aside
+##  Other {#other}
+
+- Capable of working effectively and collaboratively with team members to maximize productivity and efficiency.
+- Natural leader with great teamwork and problem-solving skills.
+- A wealth of experience communicating to the general public, both in French and English.
+:::
+```{r}
+CV %<>% print_section('other_employment')
+```
+
+
 
 \pagebreak
 Publications, Posters, and Talks {data-icon=book}
@@ -134,10 +222,3 @@ Publications, Posters, and Talks {data-icon=book}
 ```{r}
 CV %<>% print_section('data_science_writings')
 ```
-
-
-Disclaimer {#disclaimer}
---------------------------------------------------------------------------------
-This resume was made with the R package [**pagedown**](https://github.com/rstudio/pagedown) and [**datadrivencv**](http://nickstrayer.me/datadrivencv/index.html).
-
-Last updated on `r Sys.Date()`.

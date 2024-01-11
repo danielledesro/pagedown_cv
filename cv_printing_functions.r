@@ -44,12 +44,14 @@ create_CV_object <-  function(data_location,
     cv$skills        <- read_gsheet(sheet_id = "language_skills")
     cv$text_blocks   <- read_gsheet(sheet_id = "text_blocks")
     cv$contact_info  <- read_gsheet(sheet_id = "contact_info")
+    cv$output        <- read_gsheet(sheet_id = "output")
   } else {
     # Want to go old-school with csvs?
     cv$entries_data <- readr::read_csv(paste0(data_location, "entries.csv"), skip = 1)
     cv$skills       <- readr::read_csv(paste0(data_location, "language_skills.csv"), skip = 1)
     cv$text_blocks  <- readr::read_csv(paste0(data_location, "text_blocks.csv"), skip = 1)
     cv$contact_info <- readr::read_csv(paste0(data_location, "contact_info.csv"), skip = 1)
+    cv$output       <- readr::read_csv(paste0(data_location, "output.csv"), skip = 1)
   }
 
 
@@ -185,7 +187,10 @@ print_text_block <- function(cv, label){
 
 #' @description Construct a bar chart of skills
 #' @param out_of The relative maximum for skills. Used to set what a fully filled in skill bar is.
-print_skill_bars <- function(cv, out_of = 5, bar_color = "#BDD7E7", bar_background = "#d9d9d9", glue_template = "default"){
+print_skill_bars <- function(cv, out_of = 5, 
+                             bar_color = "#516db0", 
+                             bar_background = "#f2f2f1", 
+                             glue_template = "default"){
 
   if(glue_template == "default"){
     glue_template <- "
@@ -197,6 +202,10 @@ print_skill_bars <- function(cv, out_of = 5, bar_color = "#BDD7E7", bar_backgrou
 >{skill}</div>"
   }
   cv$skills %>%
+    # differentiate between technical and language skills
+    dplyr::filter(type == "language") %>% 
+    # choose entries to add to CV
+    dplyr::filter(in_resume == "TRUE") %>% 
     dplyr::mutate(width_percent = round(100*as.numeric(level)/out_of)) %>%
     glue::glue_data(glue_template) %>%
     print()
@@ -204,6 +213,55 @@ print_skill_bars <- function(cv, out_of = 5, bar_color = "#BDD7E7", bar_backgrou
   invisible(cv)
 }
 
+
+#' @description Construct list of technical skills
+print_skill_list <- function(cv){
+  cv$skills %>% 
+    # differentiate between technical and language skills    
+    dplyr::filter(type == "technical") %>% 
+    # choose entries to add to CV
+    dplyr::filter(in_resume == "TRUE") %>% 
+    glue::glue_data(
+      "<i class='fa fa-{level}'></i> {skill}<br>"
+    ) %>% 
+    print()
+  invisible(cv)
+}
+
+
+#' @description Take a position data frame and the section id desired and prints the section to markdown.
+#' @param section_id ID of the entries section to be printed as encoded by the `section` column of the `output` table
+# print_output_section <- function(cv, section_id){
+#   section_data <- cv$output %>% 
+#     # choose only entries from desired section
+#     dplyr::filter(section == section_id) %>% 
+#     # choose only selected entries
+#     dplyr::filter(in_resume == "TRUE") %>% 
+#     # extract first four characters from entries in `year` column, so that "start--end" or "start-current" entries can be sorted along with entries where only one year is listed
+#     dplyr::mutate(datum = stringr::str_sub(year, 1, 4)) %>% 
+#     # sort newest to oldest and then alphabetically
+#     dplyr::arrange(desc(datum), title)
+#   
+#   # for line indentation: > (4 spaces don't work)
+#   # for line breaks: <br> (/ doesn't work)
+#   # must add open line between <br> and >
+#   # \n (must be 3 of them) resets indentation for new entry, I think, and sometimes adds new line
+#   # whatever, it worked.
+#   section_data %>% 
+#     glue::glue_data(
+#       " > {title}
+#       <br>
+#       
+#       > > {year}:   {institution} 
+#       <br>
+#       <br>
+#       
+#       \n\n\n
+#       "
+#     ) %>% 
+#     print()
+#   invisible(cv)
+# }
 
 
 #' @description List of all links in document labeled by their superscript integer.
