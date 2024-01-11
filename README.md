@@ -1,2 +1,2 @@
 # pagedown_cv
-Automating my CV using pagedown template
+Automating my CV using datadrivencv template by Nick Strayer.
