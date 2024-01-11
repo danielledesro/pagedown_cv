@@ -1,0 +1,143 @@
+---
+title: "Danielle Desrochers's CV"
+author: Danielle Desrochers
+date: "`r Sys.Date()`"
+params:
+  pdf_mode:
+    value: true
+  sheet_is_publicly_readable:
+    value: false
+output:
+  pagedown::html_resume:
+    css: ['dd_cv.css', 'resume']
+    self_contained: true
+keep_md: true
+---
+
+```{css, echo=FALSE}
+/* Turn-off side-bar for publications */
+.pagedjs_page:not(:nth-of-type(-n+2)) {
+  --sidebar-width: 0rem; /* Shrink sidebar width to 0 */
+  --sidebar-background-color: #ffffff; /* Make color same as background */
+  --main-width: calc(var(--content-width) - var(--sidebar-width));
+  --decorator-horizontal-margin: 0.2in;
+}
+```
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  results='asis', 
+  echo = FALSE
+)
+
+library(magrittr) # For the pipe
+source("cv_printing_functions.r")
+googlesheets4::gs4_auth(email = "ddesrochers1212@gmail.com")
+
+
+# Read in all data and initialize a CV printer object
+CV <- create_CV_object(
+  data_location = "https://docs.google.com/spreadsheets/d/1roE5XSCE5NFfzHsBjb6rkWLZc7Lbv0hfRhymt603dRg/edit#gid=340636497",  
+  pdf_mode = params$pdf_mode,
+  sheet_is_publicly_readable = params$sheet_is_publicly_readable
+)
+
+```
+
+
+```{r}
+# When in pdf export mode the little dots are unaligned, so fix that with some conditional CSS.
+if(params$pdf_mode) {
+    cat("
+<style>
+:root{
+  --decorator-outer-offset-left: -6.5px;
+}
+</style>")
+}
+```
+
+
+Aside
+================================================================================
+
+<!-- ```{r} -->
+<!-- # Build interactive network of positions coloured by section -->
+<!-- # and connected if they occurred in the same year -->
+<!-- datadrivencv::build_network_logo(CV$entries_data) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- if(params$pdf_mode){ -->
+<!--   cat("View this CV online with links at _danielledesro.me/cv/_") -->
+<!-- } else { -->
+<!--   cat("[<i class='fas fa-download'></i> Download a PDF of this CV](/desrochers_cv.pdf)") -->
+<!-- } -->
+<!-- ``` -->
+
+Contact {#contact}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %>% print_contact_info()
+```
+
+
+Language Skills {#skills}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %>% print_skill_bars()
+```
+
+
+Main
+================================================================================
+
+Danielle Desrochers {#title}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_text_block("intro") 
+```
+
+Education {data-icon=graduation-cap data-concise=true}
+--------------------------------------------------------------------------------
+::: aside
+#### Research Skills
+<p><strong>- Ability to record complete, accurate, and legible data, observations, and notes, during field work activities.</strong></p>
+<p><strong>- Safely travelled to sampling locations using various field vehicles (all-terrain vehicles, trucks, vans) and watercrafts (boats with outboard motors and canoes).</strong></p>
+<p><strong>- Comfortable working in remote outdoor locations, in demanding weather conditions and for extended periods of time demonstrated by both personal activities, such as back-country camping and canoeing, and previous work experience.</strong></p>
+:::
+```{r}
+CV %<>% print_section('education')
+```
+
+Research Experience {data-icon=laptop}
+--------------------------------------------------------------------------------
+
+<!-- ::: aside -->
+<!--  ```{r} -->
+<!--  CV %<>% print_text_block('research_skills') -->
+<!--  ``` -->
+<!-- ::: -->
+
+```{r}
+CV %<>% print_section('research_positions')
+```
+
+\pagebreak
+Publications, Posters, and Talks {data-icon=book}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('data_science_writings')
+```
+
+
+Disclaimer {#disclaimer}
+--------------------------------------------------------------------------------
+This resume was made with the R package [**pagedown**](https://github.com/rstudio/pagedown) and [**datadrivencv**](http://nickstrayer.me/datadrivencv/index.html).
+
+Last updated on `r Sys.Date()`.
