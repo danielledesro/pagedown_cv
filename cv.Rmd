@@ -200,3 +200,14 @@ CV %>% print_text_block("research_skills")
 ```{r}
 CV %>% print_text_block("other_employment_aside")
 ```
+
+
+
+<!-- <!-- publications moved to a diff project for an optional third page, adding the sidebar to page 2 messes the whole formatting --> -->
+<!-- \pagebreak -->
+<!-- Publications, Posters, and Talks {data-icon=book} -->
+<!-- -------------------------------------------------------------------------------- -->
+
+<!-- ```{r} -->
+<!-- CV %<>% print_section("data_science_writings") -->
+<!-- ``` -->

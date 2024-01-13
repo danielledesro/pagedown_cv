@@ -224,7 +224,8 @@ sup {
   margin-top: 0;
 }
 
-/* add page numbers */
+/* add page numbers
+
 @page {
   @bottom-left {
     content: counter(page) "/" counter(pages);
@@ -232,4 +233,4 @@ sup {
     padding-bottom: calc(var(--pagedjs-margin-bottom));
   }
 }
-
+*/
