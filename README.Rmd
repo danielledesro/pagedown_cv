@@ -1,28 +1,37 @@
+---
+output: github_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  echo = FALSE
+)
+```
+
 
 ## Acknowledgements
 
-This CV was created based on the
-[`datadrivencv`](http://nickstrayer.me/datadrivencv/) R package. I also
-tweaked and edited some of the formatting inspiring myself from [Thomas
-Lieb](https://github.com/rietho), [Stefan
-Laser](https://github.com/LaserStefan), and [Jesús Vélez
-Santiago](https://github.com/jvelezmagic) CV’s.
+This CV was created based on the [`datadrivencv`](http://nickstrayer.me/datadrivencv/) R package.
+I also tweaked and edited some of the formatting inspiring myself from [Thomas Lieb](https://github.com/rietho), [Stefan Laser](https://github.com/LaserStefan), and [Jesús Vélez Santiago](https://github.com/jvelezmagic) CV's.
 
-# Motivation
+# Motivation 
 
-I wanted to update and modernize my CV, making it automated through R as
-opposed to the constant battle of formatting in a word document. I like
-the [`datadrivencv`](http://nickstrayer.me/datadrivencv/) package
-because it allowed me to:
+I wanted to update and modernize my CV, making it automated through R as opposed to the constant battle of formatting in a word document. I like the [`datadrivencv`](http://nickstrayer.me/datadrivencv/) package because it allowed me to:
 
-- Store the content of the CV is either .csv files, or on google sheets,
-  making it easy to edit.
-- Change the style using CSS.
-- Easily create HTML and PDF versions.
+* Store the content of the CV is either .csv files, or on google sheets, making it easy to edit.
+* Change the style using CSS.
+* Easily create HTML and PDF versions.
+
 
 <!-- ## Format of spreadsheets -->
+
 <!-- I decided to store my data in a [Google Sheet](https://docs.google.com/spreadsheets/d/1KcTSyanKHQ1jGnwVd6AxMcb3zXLvt-2RKzsPOfmI5Cw/edit#gid=917338460) -->
+
 <!-- There are four spreadsheets of "data" that are used. These take the form of separate sub-sheets within a google sheet. The spreadsheets that are needed and their columns are (note: these are partly outdated, as I did some updates to move more deta from the R markdown file into the sheet): -->
+
 <!-- ### `entries` -->
 <!-- |   Column       | Description               | -->
 <!-- | -------------- | ------------------------- | -->
@@ -34,6 +43,7 @@ because it allowed me to:
 <!-- |`end`           | End year of entry. Set to "current" if entry is still ongoing. | -->
 <!-- |`description_*` | All description columns are pasted togehter. You can include markdown and html formatting in here. A cell starting with `<exclude>` is not considered. | -->
 <!-- |`in_resume`     | A filter variable that is used to decide if entry is in the resume. | -->
+
 <!-- ### `skills` -->
 <!-- |   Column       | Description               | -->
 <!-- | -------------- | ------------------------- | -->
@@ -43,19 +53,26 @@ because it allowed me to:
 <!-- |`level_num`     | Relative numeric level of skill. Applies only to category "technical"| -->
 <!-- |`level_cat`     | Categorical level of skill. Applies only to categoriy "language" | -->
 <!-- |`in_resume`     | A filter variable that is used to decide if entry is in the resume. | -->
+
 <!-- ### `text_blocks` -->
+
 <!-- |   Column       | Description               | -->
 <!-- | -------------- | ------------------------- | -->
 <!-- | `loc`  | Id used for finding text block| -->
 <!-- | `text` | Contents of text block. Supports markdown formatting.| -->
+
 <!-- ### `contact_info` -->
 <!-- |   Column       | Description               | -->
 <!-- | -------------- | ------------------------- | -->
-<!-- |`loc`     |   Id of contact section| -->
+<!-- |`loc`     | 	Id of contact section| -->
 <!-- |`icon`    | Icon used from font-awesome 4 to label this contact section| -->
 <!-- |`contact` | The actual value written for the contact entry| -->
 <!-- |`link`    | An optional link for the contact entry | -->
+
 <!-- # Rendering your CV -->
+
 <!-- Now that you have the templates setup and you've configured your data, the last thing to do is render. The easiest way to do this is by opening `cv.rmd` in RStudio and clicking the "Knit" button. This will render an HTML version of your CV. However, you most likely want a PDF version of your CV to go along with an HTML version. The easiest way to do this is to run the included script `render_cv.r`: -->
+
 <!-- ### `render_cv.r` -->
+
 <!-- This script will render your CV in HTML and output it as `cv.html`, it will also turn on the `pdf_mode` parameter in `cv.rmd`, which will strip the links out and place them at the end linked by inline superscripts. Once the pdf version is rendered to HTML, it will then turn that HTML into a PDF using `pagedown::chrome_print()`. By using this script you can easily make sure your get both versions rendered at the same time without having to manually go in and toggle the pdf mode parameter in the yaml header and then use the print dialog in your browser.   -->
