@@ -41,14 +41,14 @@ create_CV_object <-  function(data_location,
       googlesheets4::read_sheet(data_location, sheet = sheet_id, skip = 1, col_types = "c")
     }
     cv$entries_data  <- read_gsheet(sheet_id = "entries")
-    cv$skills        <- read_gsheet(sheet_id = "language_skills")
+    cv$skills        <- read_gsheet(sheet_id = "skills")
     cv$text_blocks   <- read_gsheet(sheet_id = "text_blocks")
     cv$contact_info  <- read_gsheet(sheet_id = "contact_info")
     cv$output        <- read_gsheet(sheet_id = "output")
   } else {
     # Want to go old-school with csvs?
     cv$entries_data <- readr::read_csv(paste0(data_location, "entries.csv"), skip = 1)
-    cv$skills       <- readr::read_csv(paste0(data_location, "language_skills.csv"), skip = 1)
+    cv$skills       <- readr::read_csv(paste0(data_location, "skills.csv"), skip = 1)
     cv$text_blocks  <- readr::read_csv(paste0(data_location, "text_blocks.csv"), skip = 1)
     cv$contact_info <- readr::read_csv(paste0(data_location, "contact_info.csv"), skip = 1)
     cv$output       <- readr::read_csv(paste0(data_location, "output.csv"), skip = 1)
@@ -203,10 +203,10 @@ print_skill_bars <- function(cv, out_of = 5,
   }
   cv$skills %>%
     # differentiate between technical and language skills
-    dplyr::filter(type == "language") %>% 
+    dplyr::filter(category == "language") %>% 
     # choose entries to add to CV
     dplyr::filter(in_resume == "TRUE") %>% 
-    dplyr::mutate(width_percent = round(100*as.numeric(level)/out_of)) %>%
+    dplyr::mutate(width_percent = round(100*as.numeric(level_num)/out_of)) %>%
     glue::glue_data(glue_template) %>%
     print()
 
@@ -214,17 +214,83 @@ print_skill_bars <- function(cv, out_of = 5,
 }
 
 
-#' @description Construct list of technical skills
-print_skill_list <- function(cv){
-  cv$skills %>% 
-    # differentiate between technical and language skills    
-    dplyr::filter(type == "technical") %>% 
-    # choose entries to add to CV
-    dplyr::filter(in_resume == "TRUE") %>% 
-    glue::glue_data(
-      "<i class='fa fa-{level}'></i> {skill}<br>"
-    ) %>% 
-    print()
+#' @description Construct table of languages with bar separating proficiency
+print_languages_table <- function(cv, glue_template = "default", category_filter = "language"){
+  
+  if(glue_template == "default"){
+    glue_template_pre <- "<table class='skill_table'>
+"
+    glue_template <- "
+<tr>
+    <td style='padding-right:7px;'>{skill}</td>
+    <td style='padding-left:7px;'>{level_icon}</td>
+</tr>"
+    glue_template_post <- "
+</table>"
+  } else {
+    glue_template_pre <- glue_template_post <- ""
+  }
+  table_txt <- cv$skills %>%
+    dplyr::filter(category == category_filter) %>%
+    dplyr::arrange(order) %>%
+    glue::glue_data(glue_template)
+  print(glue::glue(glue_template_pre, paste0(table_txt, collapse = "\n"), glue_template_post))
+  
+  invisible(cv)
+}
+
+
+
+
+#' @description Construct table of technical skills with fa icons
+print_technical_table <- function(cv, glue_template = "default", category_filter = "technical"){
+  
+  if(glue_template == "default"){
+    glue_template_pre <- "<table class='skill_table'>
+"
+    glue_template <- "
+<tr>
+    <td style='padding-left:7px;'<i class='fa fa-{level_icon}'></i></td>
+    <td style='padding-right:7px;'>{skill}</td>
+</tr>"
+    glue_template_post <- "
+</table>"
+  } else {
+    glue_template_pre <- glue_template_post <- ""
+  }
+  table_txt <- cv$skills %>%
+    dplyr::filter(category == category_filter) %>%
+    dplyr::arrange(order) %>%
+    glue::glue_data(glue_template)
+  print(glue::glue(glue_template_pre, paste0(table_txt, collapse = "\n"), glue_template_post))
+  
+  invisible(cv)
+}
+
+
+
+#' @description Construct table of certification with fa icons
+print_certifications_table <- function(cv, glue_template = "default", category_filter = "certifications"){
+  
+  if(glue_template == "default"){
+    glue_template_pre <- "<table class='skill_table'>
+"
+    glue_template <- "
+<tr>
+    <td style='padding-left:7px;'<i class='fa fa-{level_icon}'></i></td>
+    <td style='padding-right:7px;'>{skill}</td>
+</tr>"
+    glue_template_post <- "
+</table>"
+  } else {
+    glue_template_pre <- glue_template_post <- ""
+  }
+  table_txt <- cv$skills %>%
+    dplyr::filter(category == category_filter) %>%
+    dplyr::arrange(order) %>%
+    glue::glue_data(glue_template)
+  print(glue::glue(glue_template_pre, paste0(table_txt, collapse = "\n"), glue_template_post))
+  
   invisible(cv)
 }
 

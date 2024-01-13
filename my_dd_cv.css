@@ -1,0 +1,235 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display&display=swap");
+
+* {
+  /* Override default margins for sidebar*/
+  --pagedjs-margin-right: 0.25in;
+  --pagedjs-margin-left: 0.3in;
+  --pagedjs-margin-top: 0.3in;
+  --pagedjs-margin-bottom: 0.3in;
+}
+
+
+/* Customize some of the sizing variables */
+:root {
+  --page-width: 210mm;
+  --margin-left: 0.25in;
+  --margin-right: 0.32in;
+
+  --sidebar-width: 12rem; /* Shrink sidebar width  */
+  --sidebar-background-color: #f7fbff; /* Make sidebar light blue */
+  --sidebar-horizontal-padding: 0.01in; /* Reduce sidebar padding */
+  --decorator-outer-dim: 10px; /* Make position deliniating circles larger */
+  --decorator-border: 2px solid #bdd7e7; /* Make timeline a blue as well*/
+
+  /* define colors */
+  --main-color-headers: #08306b;
+  --main-color-timeline-headers: #a8a7a7;
+  --main-color-skillbar-background: #d9d9d9;
+
+  /* space at the top of blocks in main section*/
+  --row-blocks-padding-top: 0.6rem;
+
+  /* adjust date column in timeline */
+  --date-block-width: 0.6in;
+
+  /* adding var for line height*/
+  --line-height: 1.15;
+}
+
+
+/* Main text is monserrat, applies to all text inside the body element*/
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300; /* smaller than the normal 400 weight */ 
+  line-height: var(--line-height); /* increase line height to improve readability */
+  color: #444;
+}
+
+/* Give headers playfair font */
+h1,
+h2 {
+  font-family: "Playfair Display", sans-serif; /*"Playfair Display", serif;*/
+  color: var(--main-color-headers);
+}
+h3 {
+  font-family: "Playfair Display", sans-serif; /*"Playfair Display", serif;*/
+  font-weight: 900;
+  color: black;
+}
+
+/* change color of links */
+a{
+  color: var(--main-color-headers);
+}
+
+/* reduce padding of main section*/
+[data-id="main"] {
+  padding: 0 0.35in 0 0;
+}
+/* header in main section color */
+[data-id="main"] h2 {
+  color: var(--main-color-headers:);
+}
+
+
+/* When in PDF export mode make sure superscripts are nice and small and italic */
+sup {
+  font-size: 0.45rem;
+  font-style: italic;
+}
+
+/* style for the disclaimer */
+#disclaimer code{
+  color: #2E2E2E;
+  font-family: "Source Code Pro";
+  font-weight: 300;
+  font-size: 8pt;
+  font-style: normal;
+  text-align: justify;
+}
+
+
+.main-block{
+  margin-top: 0.2in;
+}
+
+/* Avoid the breaking within a section */
+.blocks {
+  break-inside: avoid;
+}
+
+.details .place {
+  margin-top: 0.25rem;
+}
+
+.main-block:not(.concise) .details div {
+  padding-top: 0.2rem;
+}
+
+.formerly {
+  font-size: 10px;
+  color: var(--main-color-timeline-headers);
+  margin-top: -5px;
+}
+
+/* Change color of icons */
+.fa-map-marker-alt {
+  color: var(--main-color-headers);
+}
+
+/* Laptop icon isn't centered by default which is lame */
+.fa-laptop {
+  margin-left: -3px;
+}
+
+/* trophy icon isn't centered by default which is lame */
+.fa-trophy {
+  margin-left: -3px;
+}
+
+/* When we have links at bottom in a list make sure they actually are numbered */
+#links li {
+  list-style-type: decimal;
+}
+
+
+/* Move ul (unordered list) within sidebar to the left */
+.aside ul {
+  padding-left: 0.5rem;
+}
+
+/* reduce distance between sections in side pane */
+.aside .level2 {
+  margin-top: 0.2in;
+}
+
+/* Add a bullet point before each li (list item) inside the aside element */
+.aside li::before {
+  position: relative;
+  margin-left: -4.25pt;
+  content: "• ";
+}
+
+#aside{
+  position:relative; /* for disclaimer */
+  height:bar(--content-area-height);
+}
+
+/* Make sure elements in aside are centered and have a nice small text */
+.aside {
+  width: calc(var(--sidebar-width) + 9px);
+  height: 102%; /* scrappy way of moving disclaimer further down*/
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: var(--line-height);
+  font-size: 0.75rem;
+  margin-top: -0.1in;
+}
+
+.sidebar{
+  width: calc(var(--sidebar-width)+9px);
+  padding: 0:
+  margin: 0;
+}
+
+/* Make little circle outline be a light blue */
+.decorator::after {
+  background-color: #08306b;
+}
+
+/* some styling for the skilbar */
+.skill-bar {
+  color: white;
+  padding: 0.1rem 0.25rem;
+  margin-top: 3px;
+  position: relative;
+  width: 100%;
+}
+
+/* Add styles for little cards  */
+.info-card{
+  width: 220px;    
+  float: left;    
+  padding: 0.5rem;
+  margin: 0.5rem;
+  box-shadow: 1px 1px 4px black;
+}
+
+/* vertical line */
+.container {
+ display: flex;
+ justify-content: left;
+ height: 30px; /* adjust the height as needed */
+}
+
+.line {
+ width: 2px; /* adjust the width as needed */
+ height: 25px; /* adjust the height as needed */
+ background-color: #BDD6E7; /* adjust the color as needed */
+ margin-top: 8px; /* add some margin to the top of the vertical line */
+ margin-left: 50px; /* add some margin to the right of the vertical line */
+}
+
+/* add sidebar to page 2 */
+.extra-sidebar {
+  top: 0;
+  padding-top: 0;
+}
+
+.extra-sidebar h1 {
+  display: none;
+}
+
+.extra-sidebar .level2:first-of-type {
+  margin-top: 0;
+}
+
+/* add page numbers */
+@page {
+  @bottom-left {
+    content: counter(page) "/" counter(pages);
+    font-size: 0.7rem;
+    padding-bottom: calc(var(--pagedjs-margin-bottom));
+  }
+}
+

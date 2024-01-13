@@ -9,22 +9,21 @@ params:
     value: false
 output:
   pagedown::html_resume:
-    css: ['dd_cv.css', 'resume']
+    css: ['my_dd_cv.css', 'resume']
     # set it to true for a self-contained HTML page but it'll take longer to render
     self_contained: true
 
 ---
 
-```{css, echo=FALSE}
-/* Turn-off side-bar for publications */
-.pagedjs_page:not(:nth-of-type(-n+3)) {
-  --sidebar-width: 0rem; /* Shrink sidebar width to 0 */
-  --sidebar-background-color: #ffffff; /* Make colour same as background */
-  --main-width: calc(var(--content-width) - var(--sidebar-width));
-  --decorator-horizontal-margin: 0.2in;
-}
-```
-
+<!-- ```{css, echo=FALSE} -->
+<!-- /* Turn-off side-bar for publications */ -->
+<!-- .pagedjs_page:not(:nth-of-type(-n+2)) { -->
+<!--   --sidebar-width: 0rem; /* Shrink sidebar width to 0 */ -->
+<!--   --sidebar-background-color: #ffffff; /* Make colour same as background */ -->
+<!--   --main-width: calc(var(--content-width) - var(--sidebar-width)); -->
+<!--   --decorator-horizontal-margin: 0.2in; -->
+<!-- } -->
+<!-- ``` -->
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
@@ -45,7 +44,6 @@ CV <- create_CV_object(
 )
 
 ```
-
 
 ```{r}
 # When in pdf export mode the little dots are unaligned, so fix that with some conditional CSS.
@@ -69,6 +67,13 @@ Aside
 <!-- datadrivencv::build_network_logo(CV$entries_data) -->
 <!-- ``` -->
 
+Contact {#contact}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %>% print_contact_info()
+```
+
 <!-- ```{r} -->
 <!-- if(params$pdf_mode){ -->
 <!--   cat("View this CV online with links at _danielledesro.me/cv/_") -->
@@ -77,13 +82,6 @@ Aside
 <!-- } -->
 <!-- ``` -->
 
-Contact {#contact}
---------------------------------------------------------------------------------
-
-```{r}
-CV %>% print_contact_info()
-```
-
 <br>
 <br>
 <br>
@@ -92,40 +90,37 @@ CV %>% print_contact_info()
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
 
 Language Skills {#languageskills}
 --------------------------------------------------------------------------------
 
 ```{r}
-CV %>% print_skill_bars()
-```
-```{r}
-CV %>% print_skill_list()
+# CV %>% print_skill_bars()
+CV %>% print_languages_table()
 ```
 
-Disclaimer {#disclaimer}
+<br>
+<br>
+
+Technical Skills {#technicalskills}
 --------------------------------------------------------------------------------
-This resume was made with the R package [**pagedown**](https://github.com/rstudio/pagedown) and [**datadrivencv**](http://nickstrayer.me/datadrivencv/index.html).
 
-Last updated on `r Sys.Date()`.
+```{r}
+CV %>% print_technical_table()
+```
+
+<br>
+<br>
+
+Certifications {#certifications}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %>% print_certifications_table()
+```
+
+<br>
+<br>
 
 
 Main
@@ -133,42 +128,18 @@ Main
 
 Danielle Desrochers {#title}
 --------------------------------------------------------------------------------
-### Aquatic Biologist \| Data Scientist \| ADD TITLE
+### Aquatic Biologist \| Data Scientist
 
-```{r}
-CV %<>% print_text_block("intro") 
-```
+<!-- ```{r} -->
+<!-- CV %<>% print_text_block("intro")  -->
+<!-- ``` -->
 
-Education {data-icon=graduation-cap data-concise=true}
+
+Education {data-icon=graduation-cap}
 --------------------------------------------------------------------------------
 
-:::aside
-## Awards
-- Study in Italy Grant (2021)
-- Indspire Building Better Futures Scholarship (2014-2021)
-- Louis Riel Awards (2014-2016)
-- Guertin Centennial Entrance Scholarship, U of M (2014)
-- Cambrian Credit Union Learning for Life Award (2014)
-- MASRC - 2002 NAIG Legacy Athlete Scholarship (2014) 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-:::
-
 ```{r}
-CV %<>% print_section('education')
+CV %<>% print_section("education")
 ```
 
 
@@ -176,49 +147,56 @@ Research Experience {data-icon=laptop}
 --------------------------------------------------------------------------------
 
 ```{r}
-CV %<>% print_section('research_positions_a')
-```
-
-\pagebreak
-Research Experience {data-icon=laptop}
---------------------------------------------------------------------------------
-
-:::aside
-<!-- <span style="font-weight: 300; font-size: 1.1rem; color: #000">Research Skills</span> -->
-<!-- <br> -->
-## Research Skills
-- Safely travel to sampling locations.<br>
-- Comfortable working in remote outdoor locations, in demanding weather conditions and for extended periods of time.<br>
-- Ability to record complete and accurate field notes.<br>
-- Knowledgeable in field sampling techniques, laboratory anlyses, and environmental monitoring.<br>
-- Effective data visualization.<br>
-- Data analysis.<br>
-- Statistical and mathematical modelling.
-:::
-```{r}
-CV %<>% print_section('research_positions_b')
-```
-
-\pagebreak
-Other Employment {data-icon=book}
---------------------------------------------------------------------------------
-::: aside
-##  Other {#other}
-
-- Capable of working effectively and collaboratively with team members to maximize productivity and efficiency.
-- Natural leader with great teamwork and problem-solving skills.
-- A wealth of experience communicating to the general public, both in French and English.
-:::
-```{r}
-CV %<>% print_section('other_employment')
+CV %<>% print_section('research_positions')
 ```
 
 
-
-\pagebreak
-Publications, Posters, and Talks {data-icon=book}
+Other Employment {data-icon=suitcase}
 --------------------------------------------------------------------------------
 
 ```{r}
-CV %<>% print_section('data_science_writings')
+CV %<>% print_section("other_employment")
+```
+
+
+Second page sidebar {.aside .extra-sidebar}
+================================================================================
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+ <div class="line"></div>
+</div>
+```{r}
+CV %>% print_text_block("research_skills")
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+ <div class="line"></div>
+</div>
+```{r}
+CV %>% print_text_block("other_employment_aside")
 ```

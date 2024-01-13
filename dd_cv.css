@@ -8,11 +8,13 @@ body {
   color: #444;
 }
 
+/*
 /* Give headers playfair font */
 h1, h2, h3 {
   font-family: "Playfair Display", serif;
   color: #000;
 }
+
 
 /* style for the disclaimer */
 #disclaimer code{
@@ -113,7 +115,6 @@ sup {
 }
 
 /* some styling for the skilbar */
-
 .skill-bar {
   color: black;
   padding: 0.1rem 0.25rem;
@@ -123,8 +124,12 @@ sup {
 }
 
 
-/* When the class no-timeline is added we remove the after psuedo element from the header... */
+/* Remove decorater for section with ID relevantsection */
+[data-id="research_skills"] {
+  --decorator-border: none;
+}
 
+/* When the class no-timeline is added we remove the after psuedo element from the header... */
 /* Removes the psuedo element on h2 tags for this section */
 .section.no-timeline h2::after {
   content: none;
@@ -147,7 +152,6 @@ sup {
 
 
 /* Get page numbering */
-
 .pagedjs_margin-bottom-right-corner {
   visibility: unset !important;
 }
@@ -161,7 +165,6 @@ sup {
 }
 
 /* Add page numbering */
-
 @page :left {
   @bottom {
     content: counter(page);
@@ -172,3 +175,4 @@ sup {
     content: counter(page);
   }
 }
+*/
